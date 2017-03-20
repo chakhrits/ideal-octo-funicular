@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Parkingup2you.Models.Parking>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Parking Status</h2>
+@using (Html.BeginForm("Index", "Parkings", FormMethod.Post, new { @class = "form-inline" }))
+{
+    <p>
+
+
+        @*<div class="form-group">
+                <label class="sr-only"> ค้นหาโดย:</label>
+                <h4 class="form-control-static" style="margin-right:10px">ค้นหาโดย:</h4>
+            </div>*@
+        @{
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "ช่องที่จอดรถ",
+                Value = "1"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "สถานะที่จอดรถ",
+                Value = "2",
+                Selected = true
+            });
+
+        }
+        <div class="form-group">
+            @Html.DropDownList("movieGenre", new SelectList(listItems, "Value", "Text"), new { @class = "form-control", @style = "margin-top:15px" })
+
+        </div>
+        <div class="form-group">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @placeholder = "Search", @style = "margin-top:15px" })
+
+        </div>
+        <input type="submit" value="ค้นหา" class="btn btn-success" style="margin-left:10px; margin-top:15px" />
+    </p>
+            }
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+           @Html.DisplayName("ช่องที่จอดรถ")
+        </th>
+        <th>
+            @Html.DisplayName("สถานะที่จอดรถ")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Block)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idBlock }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Details", "Details", new { id=item.idBlock }, new { @class = "btn btn-info" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.idBlock }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
